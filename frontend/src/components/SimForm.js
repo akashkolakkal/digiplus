@@ -1,25 +1,24 @@
-// src/components/SimForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
 const SimForm = ({ fetchSims }) => {
-  const [sim_number, setSim_number] = useState('');
-  const [phone_number, setPhone_number] = useState('');
+  const [simNumber, setSimNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting SIM:", { sim_number, phone_number }); // Log the values before submitting
+    console.log("Submitting SIM:", { simNumber, phoneNumber }); 
 
     try {
-        // Check if the fields are populated
-        if (!sim_number || !phone_number) {
+        
+        if (!simNumber || !phoneNumber) {
             throw new Error("Both fields are required.");
         }
         
-        await axios.post('https://digiplus-server.vercel.app/api/sims', { sim_number, phone_number });
-        fetchSims(); // Refresh the list after adding a new SIM
-        setSim_number('');
-        setPhone_number('');
+        await axios.post('http://localhost:5000/api/sims', { simNumber, phoneNumber });
+        fetchSims(); 
+        setSimNumber('');
+        setPhoneNumber('');
     } catch (error) {
         console.error("Error creating SIM card:", error.response ? error.response.data : error.message);
     }
@@ -30,15 +29,15 @@ const SimForm = ({ fetchSims }) => {
       <input
         type="text"
         placeholder="SIM Number"
-        value={sim_number}
-        onChange={(e) => setSim_number(e.target.value)}
+        value={simNumber}
+        onChange={(e) => setSimNumber(e.target.value)}
         required
       />
       <input
         type="text"
         placeholder="Phone Number"
-        value={phone_number}
-        onChange={(e) => setPhone_number(e.target.value)}
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
         required
       />
       <button type="submit">Add SIM</button>

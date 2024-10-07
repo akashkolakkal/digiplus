@@ -1,10 +1,10 @@
 const SimCard = require('../models/SimCard');
 
 exports.activateSim = async (req, res) => {
-    const { sim_number } = req.body;
+    const { simNumber } = req.body;
 
     try {
-        const simCard = await SimCard.findOne({ sim_number });
+        const simCard = await SimCard.findOne({ simNumber });
         if (!simCard) {
             return res.status(404).json({ message: 'SIM card not found' });
         }
@@ -14,7 +14,7 @@ exports.activateSim = async (req, res) => {
         }
 
         simCard.status = 'active';
-        simCard.activation_date = new Date();
+        simCard.activationDate = new Date();
         await simCard.save();
 
         res.status(200).json({ message: 'SIM card activated successfully', simCard });
@@ -24,10 +24,10 @@ exports.activateSim = async (req, res) => {
 };
 
 exports.deactivateSim = async (req, res) => {
-    const { sim_number } = req.body;
+    const { simNumber } = req.body;
 
     try {
-        const simCard = await SimCard.findOne({ sim_number });
+        const simCard = await SimCard.findOne({ simNumber });
         if (!simCard) {
             return res.status(404).json({ message: 'SIM card not found' });
         }
@@ -37,7 +37,7 @@ exports.deactivateSim = async (req, res) => {
         }
 
         simCard.status = 'inactive';
-        simCard.activation_date = null;
+        simCard.activationDate = null;
         await simCard.save();
 
         res.status(200).json({ message: 'SIM card deactivated successfully', simCard });
@@ -49,7 +49,7 @@ exports.deactivateSim = async (req, res) => {
 exports.getSimDetails = async (req, res) => {
     const { simNumber } = req.params;
     try {
-        const simCard = await SimCard.findOne({ simNumber: simNumber });
+        const simCard = await SimCard.findOne({ simNumber });
         if (!simCard) {
             return res.status(404).json({ message: 'SIM card not found' });
         }
@@ -61,35 +61,34 @@ exports.getSimDetails = async (req, res) => {
 };
 
 exports.addSimDetails = async (req, res) => {
-    const { simNumber, phoneNumber } = req.body;
-  
-    try {
+  const { simNumber, phoneNumber } = req.body; 
+  try {
       const existingSim = await SimCard.findOne({ simNumber });
       if (existingSim) {
-        return res.status(400).json({ message: 'SIM card already exists' });
+          return res.status(400).json({ message: 'SIM card already exists' });
       }
-  
+
       const simCard = new SimCard({
-        simNumber,
-        phoneNumber,
-        status: 'inactive', 
+          simNumber,
+          phoneNumber,
+          status: 'inactive',
       });
-  
+
       const newSim = await simCard.save();
       res.status(201).json({
-        message: 'SIM card created successfully',
-        simCard: newSim,
+          message: 'SIM card created successfully',
+          simCard: newSim,
       });
-    } catch (error) {
+  } catch (error) {
       console.error('Error during SIM card creation:', error); 
       res.status(500).json({ error: 'Error creating SIM card' });
-    }
-  };
+  }
+};
 
   exports.getAllSims = async (req, res) => {
     try {
-      const sims = await SimCard.find(); // Retrieve all SIM cards from the database
-      res.status(200).json(sims); // Send the list of SIM cards as a JSON response
+      const sims = await SimCard.find(); 
+      res.status(200).json(sims); 
     } catch (error) {
       console.error("Error fetching SIM cards:", error);
       res.status(500).json({ message: 'Error fetching SIM cards' });

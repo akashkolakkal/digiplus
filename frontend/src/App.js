@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SimForm from './components/SimForm';
@@ -9,9 +8,8 @@ const App = () => {
 
   const fetchSims = async () => {
     try {
-      const response = await axios.get('https://digiplus-server.vercel.app/api/sims');
-      console.log(response.data); // Log the response data for debugging
-      setSims(response.data); // Set the state with the fetched data
+      const response = await axios.get('http://localhost:5000/api/sims');
+      setSims(response.data); 
     } catch (error) {
       console.error("Error fetching SIM cards:", error);
     }
