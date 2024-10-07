@@ -9,7 +9,7 @@ const App = () => {
 
   const fetchSims = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/sims');
+      const response = await axios.get('https://digiplus-server.vercel.app/api/sims');
       console.log(response.data); // Log the response data for debugging
       setSims(response.data); // Set the state with the fetched data
     } catch (error) {

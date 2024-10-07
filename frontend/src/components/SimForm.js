@@ -16,7 +16,7 @@ const SimForm = ({ fetchSims }) => {
             throw new Error("Both fields are required.");
         }
         
-        await axios.post('http://localhost:5000/api/sims', { sim_number, phone_number });
+        await axios.post('https://digiplus-server.vercel.app/api/sims', { sim_number, phone_number });
         fetchSims(); // Refresh the list after adding a new SIM
         setSim_number('');
         setPhone_number('');

@@ -5,7 +5,7 @@ import axios from 'axios';
 const SimCard = ({ sim, fetchSims }) => {
   const handleActivate = async () => {
     try {
-      await axios.post('http://localhost:5000/api/sims/activate', { simNumber: sim.simNumber });
+      await axios.post('https://digiplus-server.vercel.app/api/sims/activate', { simNumber: sim.simNumber });
       fetchSims(); // Refresh the list after activation
     } catch (error) {
       console.error("Error activating SIM card:", error.response?.data || error.message);
@@ -14,7 +14,7 @@ const SimCard = ({ sim, fetchSims }) => {
 
   const handleDeactivate = async () => {
     try {
-      await axios.post('http://localhost:5000/api/sims/deactivate', { simNumber: sim.simNumber });
+      await axios.post('https://digiplus-server.vercel.app/api/sims/deactivate', { simNumber: sim.simNumber });
       fetchSims(); // Refresh the list after deactivation
     } catch (error) {
       console.error("Error deactivating SIM card:", error.response?.data || error.message);
