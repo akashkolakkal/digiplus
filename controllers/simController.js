@@ -1,6 +1,5 @@
 const SimCard = require('../models/SimCard');
 
-// Activate SIM
 exports.activateSim = async (req, res) => {
     const { sim_number } = req.body;
 
@@ -24,7 +23,6 @@ exports.activateSim = async (req, res) => {
     }
 };
 
-// Deactivate SIM
 exports.deactivateSim = async (req, res) => {
     const { sim_number } = req.body;
 
@@ -48,12 +46,12 @@ exports.deactivateSim = async (req, res) => {
     }
 };
 
-// Get SIM Details
 exports.getSimDetails = async (req, res) => {
     const { simNumber } = req.params;
-
+    console.log(simNumber);
     try {
-        const simCard = await SimCard.findOne({ sim_number: simNumber });
+        const simCard = await SimCard.findOne({ simNumber: simNumber });
+        console.log(simCard)
         if (!simCard) {
             return res.status(404).json({ message: 'SIM card not found' });
         }
@@ -63,3 +61,30 @@ exports.getSimDetails = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.addSimDetails = async (req, res) => {
+    const { simNumber, phoneNumber } = req.body;
+  
+    try {
+      const existingSim = await SimCard.findOne({ simNumber });
+      if (existingSim) {
+        return res.status(400).json({ message: 'SIM card already exists' });
+      }
+  
+      const simCard = new SimCard({
+        simNumber,
+        phoneNumber,
+        status: 'inactive', 
+      });
+  
+      const newSim = await simCard.save();
+      res.status(201).json({
+        message: 'SIM card created successfully',
+        simCard: newSim,
+      });
+    } catch (error) {
+      console.error('Error during SIM card creation:', error); 
+      res.status(500).json({ error: 'Error creating SIM card' });
+    }
+  };
+
