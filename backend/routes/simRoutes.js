@@ -8,7 +8,7 @@ const {
     getAllSims
 } = require('../controllers/simController');
 
-router.post('/', addSimDetails);  
+router.post('/add', addSimDetails);  
 
 router.post('/activate', activateSim);
 

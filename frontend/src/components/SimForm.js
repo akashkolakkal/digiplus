@@ -15,7 +15,7 @@ const SimForm = ({ fetchSims }) => {
             throw new Error("Both fields are required.");
         }
         
-        await axios.post('http://localhost:5000/api/sims', { simNumber, phoneNumber });
+        await axios.post('/api/sims', { simNumber, phoneNumber });
         fetchSims(); 
         setSimNumber('');
         setPhoneNumber('');
