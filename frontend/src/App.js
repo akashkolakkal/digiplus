@@ -9,7 +9,8 @@ const App = () => {
   const fetchSims = async () => {
     try {
       const response = await axios.get('/api/sims');
-      setSims(response.data); 
+      const simsData = Array.isArray(response.data) ? response.data : []; 
+      setSims(simsData);
     } catch (error) {
       console.error("Error fetching SIM cards:", error);
     }

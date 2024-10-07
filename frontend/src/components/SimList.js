@@ -1,7 +1,7 @@
 import React from 'react';
 import SimCard from './SimCard';
 
-const SimList = ({ sims, fetchSims }) => {
+const SimList = ({ sims = [], fetchSims }) => {
   const normalizeSimData = (sim) => {
     return {
       _id: sim._id,
@@ -20,7 +20,7 @@ const SimList = ({ sims, fetchSims }) => {
           const normalizedSim = normalizeSimData(sim);
           return (
             <SimCard key={normalizedSim._id} sim={normalizedSim} fetchSims={fetchSims} />
-          );
+          );  
         })
       ) : (
         <p>No SIM cards found.</p>
