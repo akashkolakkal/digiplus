@@ -1,4 +1,4 @@
-const SimCard = require('../backend/models/SimCard');
+const SimCard = require('../models/SimCard');
 
 exports.activateSim = async (req, res) => {
     const { sim_number } = req.body;
