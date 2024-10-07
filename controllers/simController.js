@@ -48,10 +48,8 @@ exports.deactivateSim = async (req, res) => {
 
 exports.getSimDetails = async (req, res) => {
     const { simNumber } = req.params;
-    console.log(simNumber);
     try {
         const simCard = await SimCard.findOne({ simNumber: simNumber });
-        console.log(simCard)
         if (!simCard) {
             return res.status(404).json({ message: 'SIM card not found' });
         }
